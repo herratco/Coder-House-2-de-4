@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Mirrored from portfolio-jorge-herran-html-css-1.netlify.app/producto.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Apr 2023 11:05:31 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FrontEnd Store</title>
+    <link rel="stylesheet" href="../css/normalize.css">
+    <link href="https://fonts.googleapis.com/css2?family=Staatliches&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header class="header">
+        <a href="../index.html">
+            <img class="header__logo" src="../img/logo.png" alt="Logotipo">
+        </a>
+    </header>
+
+    <nav class="navegacion">
+        <nav class="navegacion">
+            <a class="navegacion__enlace navegacion__enlace--activo" href="../index.html">Store</a>
+            <a class="navegacion__enlace" href="../nosotros.html">About us</a>
+            <a class="navegacion__enlace navegacion__enlace--activo" href="../cart.html">Cart</a>
+        </nav>
+    </nav>
+
+    <main class="contenedor">
+        <h1>Bulma css</h1>
+        <input class="price" value="25" id="price" disabled/>
+        <div class="camisa">
+            <img class="camisa__imagen" src="../img/9.jpg" alt="Imagen del Producto">
+
+            <div class="camisa__contenido">
+                <p>Maecenas consectetur ultricies mi vel venenatis. Curabitur risus tellus, congue non tellus at, semper dapibus turpis. Duis pellentesque, risus sit amet placerat porttitor, tortor augue volutpat ante, non dignissim odio ligula at arcu.</p>
+
+                <form class="formulario" id="form">
+                    <select class="formulario__campo" id="select">
+                        <option disabled selected>-- Select size --</option>
+                        <option value="small">Small</option>
+                        <option value="medium">Medium</option>
+                        <option value="large">Large</option>
+                        <option value="x-large">XL</option>
+                    </select>
+                    <input class="formulario__campo" type="number" placeholder="Quantity" min="1" id="quantity">
+                    <input class="formulario__submit" type="submit" value="Add to the cart">
+                </form>
+                <div class="to_cart">
+                    <a href="../cart.html" >Go to cart-></a>
+                </div>
+                <script src="../store.js"></script>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__texto">Jorge Herran - All rights reserved 2022.</p>
+    </footer>
+    
+</body>
+
+<!-- Mirrored from portfolio-jorge-herran-html-css-1.netlify.app/producto.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 01 Apr 2023 11:05:31 GMT -->
+</html>
