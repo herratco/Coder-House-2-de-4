@@ -4,7 +4,6 @@ loc = loc[loc.length-1];
 //total should be a global variable since it is accessible in all directories 
 let cart =localStorage.getItem("store");
 cart = cart ? JSON.parse(cart):[];
-
 if(loc==="cart.html"){
 //before everything is done call the function 
 summeryCreator(cart);
@@ -28,32 +27,61 @@ cart && cart.map(prod=>{
     </div>`)
 })
 document.getElementById("total").innerHTML=`Total: $${total}`
-const button = document.getElementById('btn');
-const alertBox = document.getElementById("alert");
-const message = document.getElementById("message");
 
-button.addEventListener("click", (e)=>{
-  e.preventDefault();
-
-  alertBox.style.display = "flex";
-  if(!cart.length){
-   message.innerHTML = "you have to add items in the cart first"
-   message.style.color = "red"
-  }
-  
-})
-
-
-//add event to the alert box
-/**get the alert button */
-const purchase = document.getElementById('btn-alert');
+/**paypal payment method integration is held here */
+const purchase = document.getElementById('btn');
+const container = document.getElementById("paypal")
 purchase.addEventListener("click",(e)=>{
    e.preventDefault();
-   localStorage.clear();
-   alertBox.style.display = "none";
-//   here is summery of the items to be sold 
+   const value = total;
+   paypal.Buttons({
+      async createOrder() {
+      //TODO js model for AJAX call
+        const paypal= await fetch("https://paypal-wine.vercel.app/create-paypal-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
 
-   location.reload();
+            body: JSON.stringify({
+              //TODO JSON make it a json 
+              "value":`${value}`
+            }),
+          })
+          const order = await paypal.json()
+          return order.id
+    },
+    
+   async onApprove(data) {
+        //TODO js model for AJAX call
+        const response = fetch("https://paypal-wine.vercel.app/capture-paypal-order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          
+            body: JSON.stringify({
+                //TODO JSON here is the json body
+              "orderID":`${data.orderID}`
+            })
+          })
+        
+          const orderData = await response.json()
+         
+          let transaction;
+          if(orderData){
+            console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+            const transaction = orderData.purchase_units[0].payments.captures[0];
+            alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+
+          }
+          
+            transaction && localStorage.clear();
+            transaction && location.reload();
+            
+        
+    }
+  }).render(container);
 })
 
 function remove (id){
@@ -71,8 +99,7 @@ else if(loc==="index.html" || loc ==="nosotros.html")
     summeryCreator(cart);
  }
 
-   
-// this could be executed when the location out of cart 
+    
 else{
     //call the function to create a summery
     summeryCreator(cart);
@@ -84,7 +111,7 @@ else{
         const selected = document.getElementById("select");
         const quantity = document.getElementById("quantity");
         let price = document.getElementById("price");
-    
+      
         // we have to calculate the taxes
         const totalItem = parseInt(quantity.value);
       
@@ -153,7 +180,7 @@ else{
         quantity.value = "";
        
        }
-      location.reload() 
+    //   location.reload() 
     })
      //to make the number of items in the cart icon
     
@@ -212,3 +239,4 @@ summeryBox.appendChild(cart)
 summeryBox.appendChild(details);
 document.body.appendChild(summeryBox)
 }
+
